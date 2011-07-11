@@ -1,0 +1,9 @@
+gags:
+  - クールギャグ1
+  - クールギャグ2
+  - ・・・
+
+application_key: "・・・"
+application_secret: "・・・"
+user_token: "・・・"
+user_secret: "・・・"
