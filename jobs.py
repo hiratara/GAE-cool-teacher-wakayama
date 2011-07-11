@@ -1,32 +1,33 @@
 # -*- coding: utf-8 -*-
 import oauth
 import random
+import yaml
+import codecs
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import urlfetch
 
-dajare = [
-# だじゃれ設定
-]
-
-def a_dajare():
-    return random.choice(dajare)
-
 class MainPage(webapp.RequestHandler):
-    def get(self):
-        application_key = ""
-        application_secret = ""
-        user_token = ""
-        user_secret = ""
+    def __init__(self):
+        fh = codecs.open("config.yaml", "r", "UTF-8")
+        self.config = yaml.load(fh)
 
+    def a_dajare(self):
+        return random.choice(self.config["gags"])
+
+    def get(self):
         client = oauth.TwitterClient(
-            application_key, application_secret, 
+            self.config["application_key"],
+            self.config["application_secret"],
             "")
 
         url = "http://twitter.com/statuses/update.xml"
         result = client.make_request(
-            url=url, additional_params={"status":a_dajare()},
-            token=user_token, secret=user_secret, method=urlfetch.POST)
+            url=url, additional_params={"status":self.a_dajare()},
+            token=self.config["user_token"], 
+            secret=self.config["user_secret"], 
+            method=urlfetch.POST)
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(result.content)
