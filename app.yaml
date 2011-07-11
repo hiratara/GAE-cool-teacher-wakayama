@@ -1,0 +1,12 @@
+application: cool-teacher-wakayama
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /jobs
+  script: jobs.py
+  login: admin
+
+- url: /.*
+  script: index.py

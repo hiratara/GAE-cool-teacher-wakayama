@@ -1,0 +1,4 @@
+cron:
+- description: "twitter bot - Teacher WAKAYAMA"
+  url: /jobs
+  schedule: every 3 hours
